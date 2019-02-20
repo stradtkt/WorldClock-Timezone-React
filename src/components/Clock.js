@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import moment from 'moment-timezone';
 import PropTypes from 'prop-types';
-
+import Select from './Select'
 
 
 
@@ -15,7 +15,12 @@ class Clock extends Component {
         };
     }
     handleChangeSelect(e) {
-
+        let select = e.target.value;
+        this.setState({select: select, submit: true});
+    }
+    handleOnSubmit(e) {
+        e.preventDefault();
+        this.setState({tz: [...this.state.tz, this.state.select], select: "", submit: false});
     }
     render() {
         return (
@@ -23,13 +28,10 @@ class Clock extends Component {
                 <div className="container">
                     <div className="row">
                         <div className="col-md-4">
-                            <form onSubmit={handleChangeTimeZone}>
+                            <form onSubmit={this.handleOnSubmit.bind(this)}>
                                 <div className="form-group">
-                                    <select name="timezone" id="time-zone-select" className="form-control">
-                                        <option value="location">Location 1</option>
-                                        <option value="location">Location 2</option>
-                                        <option value="location">Location 3</option>
-                                        <option value="location">Location 4</option>
+                                    <select onChange={this.handleChangeSelect.bind(this)} value={this.state.select}>
+                                        <Select/>
                                     </select>
                                 </div>
                                 <input type="submit" value="Select Timezone" className="btn btn-primary btn-block"/>
