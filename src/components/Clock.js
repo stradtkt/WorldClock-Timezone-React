@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import moment from 'moment-timezone';
-import PropTypes from 'prop-types';
 import Select from './Select'
-
+import Clocks from "./Clocks";
+import "./../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import "./../../node_modules/jquery/dist/jquery.min";
+import "./../../node_modules/popper.js/dist/umd/popper.min";
+import "./../../node_modules/bootstrap/dist/js/bootstrap.min";
 
 
 class Clock extends Component {
@@ -11,7 +13,7 @@ class Clock extends Component {
         this.state = {
             select: "",
             submit: false,
-            tz: []
+            zones: []
         };
     }
     handleChangeSelect(e) {
@@ -20,7 +22,7 @@ class Clock extends Component {
     }
     handleOnSubmit(e) {
         e.preventDefault();
-        this.setState({tz: [...this.state.tz, this.state.select], select: "", submit: false});
+        this.setState({zones: [...this.state.zones, this.state.select], select: "", submit: false});
     }
     render() {
         return (
@@ -38,7 +40,7 @@ class Clock extends Component {
                             </form>
                         </div>
                         <div className="col-md-8">
-
+                            <Clocks zones={this.state.zones}/>
                         </div>
                     </div>
                 </div>
@@ -46,13 +48,5 @@ class Clock extends Component {
         );
     }
 }
-
-Clock.propTypes = {
-    tz: PropTypes.string.isRequired
-};
-
-Clock.defaultProps = {
-    tz: 'Asia/Jerusalem',
-};
 
 export default Clock;
